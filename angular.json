@@ -30,6 +30,7 @@
               "src/webapp/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/webapp/styles.scss"
             ],
             "scripts": []
@@ -93,6 +94,7 @@
               "src/webapp/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/webapp/styles.scss"
             ],
             "scripts": []
