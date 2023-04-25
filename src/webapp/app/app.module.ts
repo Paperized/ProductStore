@@ -6,6 +6,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MainComponent} from './layout/main/main.component';
 import {LayoutModule} from "./layout/layout.module";
 import {SharedModule} from "./shared/shared.module";
+import {HttpClientModule} from "@angular/common/http";
+import {customInterceptors} from "./interceptor/interceptors";
 
 @NgModule({
   imports: [
@@ -13,9 +15,12 @@ import {SharedModule} from "./shared/shared.module";
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    customInterceptors
+  ],
   bootstrap: [MainComponent]
 })
 export class AppModule { }

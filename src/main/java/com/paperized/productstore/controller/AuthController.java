@@ -1,7 +1,9 @@
 package com.paperized.productstore.controller;
 
-import com.paperized.productstore.dto.LoginDTO;
-import com.paperized.productstore.dto.RegisterDTO;
+import com.paperized.productstore.dto.LoginRequest;
+import com.paperized.productstore.dto.LoginResponse;
+import com.paperized.productstore.dto.RegisterRequest;
+import com.paperized.productstore.dto.RegisterResponse;
 import com.paperized.productstore.service.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,13 +20,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginDTO loginDTO) {
-        return authService.login(loginDTO);
+    public LoginResponse login(@RequestBody LoginRequest loginRequest) {
+        return authService.login(loginRequest);
     }
 
     @PostMapping("/register")
-    public Long register(@RequestBody RegisterDTO registerDTO) {
-        return authService.register(registerDTO);
+    public RegisterResponse register(@RequestBody RegisterRequest registerRequest) {
+        return authService.register(registerRequest);
     }
 }
 

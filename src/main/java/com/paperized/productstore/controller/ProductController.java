@@ -1,15 +1,10 @@
 package com.paperized.productstore.controller;
 
 import com.paperized.productstore.dto.ProductDTO;
-import com.paperized.productstore.security.AuthRole;
 import com.paperized.productstore.security.util.IsAdmin;
-import com.paperized.productstore.security.util.IsAuthenticated;
 import com.paperized.productstore.service.ProductService;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
 import java.util.List;
 
 @RestController

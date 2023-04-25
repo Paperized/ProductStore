@@ -7,16 +7,16 @@ import java.sql.Timestamp;
 import java.time.Instant;
 
 @Data
-public class RegisterDTO {
+public class RegisterRequest {
     private String username;
     private String email;
     private String password;
 
-    public static User toUser(RegisterDTO registerDTO) {
+    public static User toUser(RegisterRequest registerRequest) {
         User user = new User();
-        user.setUsername(registerDTO.getUsername());
-        user.setEmail(registerDTO.getEmail());
-        user.setPassword(registerDTO.getPassword());
+        user.setUsername(registerRequest.getUsername());
+        user.setEmail(registerRequest.getEmail());
+        user.setPassword(registerRequest.getPassword());
         user.setCreationTime(Timestamp.from(Instant.now()));
         return user;
     }

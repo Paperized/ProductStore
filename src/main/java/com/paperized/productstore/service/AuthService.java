@@ -1,9 +1,11 @@
 package com.paperized.productstore.service;
 
-import com.paperized.productstore.dto.LoginDTO;
-import com.paperized.productstore.dto.RegisterDTO;
+import com.paperized.productstore.dto.LoginRequest;
+import com.paperized.productstore.dto.LoginResponse;
+import com.paperized.productstore.dto.RegisterRequest;
+import com.paperized.productstore.dto.RegisterResponse;
 
 public interface AuthService {
-    Long register(RegisterDTO registerDTO);
-    String login(LoginDTO loginDTO);
+    RegisterResponse register(RegisterRequest registerRequest);
+    LoginResponse login(LoginRequest loginRequest);
 }

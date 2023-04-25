@@ -1,5 +1,8 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
+import {AuthService} from "../../services/auth.service";
+import {Login} from "../../models/Login";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -13,15 +16,17 @@ export class LoginComponent {
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) { }
 
   onSubmit() {
-    console.warn('Your order has been submitted', this.loginForm.value);
+    this.authService.login(new Login(this.loginForm.value.username!, this.loginForm.value.password!))
+      .subscribe({
+        next: _ => this.router.navigate(['/']),
+        error: this.onError
+      });
   }
 
-  compareConfirmedPassword(control: AbstractControl): {[key: string]: boolean} | null {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-    return password && confirmPassword && password.value !== confirmPassword.value ? { 'passwordMismatch': true } : null;
+  onError(err: any) {
+    console.log(err);
   }
 }
