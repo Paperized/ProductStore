@@ -1,0 +1,44 @@
+<div fxLayout fxLayoutAlign.gt-sm="center center" class="h-100">
+  <mat-card class="my-card" fxFlex="100%" fxFlex.gt-sm="30%">
+    <mat-card-header class="mat-full-width">
+      <mat-card-title fxLayout>
+        <h3>Create an Account</h3>
+        <a class="router-link-no-underline" style="margin-left: auto; margin-top: 10px"
+           fxLayout fxLayoutAlign=" center" fxFlexAlign="center" routerLink="/login">
+          <span style="font-size: medium">Login here</span>
+          <mat-icon inline="true">arrow_right_alt</mat-icon>
+        </a>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="registerForm" (submit)="onSubmit()" fxLayout="column">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput type="email" placeholder="Enter your email" formControlName="email">
+          <mat-error *ngIf="registerForm.controls['email'].hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="registerForm.controls['email'].hasError('email')">Email is not valid</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input matInput type="text" placeholder="Enter your username" formControlName="username">
+          <mat-error *ngIf="registerForm.controls['username'].hasError('required')">Username is required</mat-error>
+          <mat-error *ngIf="registerForm.controls['username'].hasError('minlength') ||
+                          registerForm.controls['username'].hasError('maxlength')">Username must be between 3 and 16 characters</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput type="password" placeholder="Enter your password" formControlName="password">
+          <mat-error *ngIf="registerForm.controls['password'].hasError('required')">Password is required</mat-error>
+          <mat-error *ngIf="registerForm.controls['password'].hasError('minlength')">Password must be at least 6 characters long</mat-error>
+        </mat-form-field>
+        <mat-form-field class="input-field">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" placeholder="Confirm your password" formControlName="confirmPassword">
+          <mat-error *ngIf="registerForm.controls['confirmPassword'].hasError('required')">Password confirmation is required</mat-error>
+          <mat-error *ngIf="registerForm.controls['confirmPassword'].hasError('passwordMismatch')">Confirm password does not match the password</mat-error>
+        </mat-form-field>
+        <button class="login-button" mat-raised-button color="primary" [disabled]="registerForm.invalid">Submit</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

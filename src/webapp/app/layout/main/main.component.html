@@ -1,6 +1,7 @@
-<app-header></app-header>
-
-<div>
-  <router-outlet></router-outlet>
-  <app-footer></app-footer>
+<div fxLayout="column" style="min-height: 100vh">
+  <app-header fxFlex="0 0 auto"></app-header>
+  <main id="main-page" fxLayout fxFlex="1 0 auto">
+    <router-outlet></router-outlet>
+  </main>
+  <app-footer fxFlex="0 0 auto"></app-footer>
 </div>
