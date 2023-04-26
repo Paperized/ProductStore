@@ -1,0 +1,33 @@
+{
+  "general": {
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "errors": {
+      "uc_user_username": "This username is already in use",
+      "uc_user_email": "This email is already in use",
+      "uc_role_name": "This role name is already in use",
+
+      "fk_user_id": "This user does not exists",
+      "fk_role_id": "This role does not exists"
+    },
+    "form": {
+      "required": "This field is required",
+      "minlength": "This field must be at least {{ min }} characters long",
+      "maxlength": "This field can't be longer then {{ max }} characters long",
+      "email": "Email is not valid",
+      "passwordMismatch": "Confirm password does not match the password"
+    }
+  },
+  "login": {
+    "registerHere": "Register here",
+    "title": "Login",
+    "loginBtn": "Login"
+  },
+  "register": {
+    "loginHere": "Login here",
+    "title": "Create an Account",
+    "registerBtn": "Register"
+  }
+}

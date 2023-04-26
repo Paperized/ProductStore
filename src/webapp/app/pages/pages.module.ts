@@ -11,6 +11,7 @@ import {MatInputModule} from "@angular/material/input";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -18,16 +19,16 @@ import {MatIconModule} from "@angular/material/icon";
     LoginComponent,
     RegisterComponent
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule.forChild(PAGES_ROUTES),
-    MatCardModule,
-    MatInputModule,
-    FormsModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatIconModule
-  ]
+    imports: [
+        CommonModule,
+        SharedModule,
+        RouterModule.forChild(PAGES_ROUTES),
+        MatCardModule,
+        MatInputModule,
+        FormsModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatIconModule
+    ]
 })
 export class PagesModule { }

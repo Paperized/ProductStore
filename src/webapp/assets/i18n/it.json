@@ -1,0 +1,33 @@
+{
+  "general": {
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Conferma Password",
+    "errors": {
+      "uc_user_username": "Questo nome utente è già in uso",
+      "uc_user_email": "Questa email è già in uso",
+      "uc_role_name": "Questo ruolo è già in uso",
+      "fk_user_id": "Questo utente non esiste",
+      "fk_role_id": "Questo ruolo non esiste"
+    },
+    "form": {
+      "required": "Questo campo è obbligatorio",
+      "fieldLengthBetween": "Questo campo deve contenere dai {{ min }} ai {{ max }} caratteri",
+      "minlength": "Questo campo deve essere di almeno {{ min }} caratteri",
+      "maxlength": "Questo campo non può contenere più di {{ max }} caratteri",
+      "email": "Email non valida",
+      "passwordMismatch": "La password confermata è diversa dalla precedente"
+    }
+  },
+  "login": {
+    "registerHere": "Registrati",
+    "title": "Accedi",
+    "loginBtn": "Accedi"
+  },
+  "register": {
+    "loginHere": "Accedi",
+    "title": "Crea un Account",
+    "registerBtn": "Iscriviti"
+  }
+}

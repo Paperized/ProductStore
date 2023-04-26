@@ -40,6 +40,16 @@ export class RegisterComponent {
     console.log(err);
   }
 
+  getFirstErrorMessage(control: AbstractControl) {
+    const errors = control.errors;
+    if (errors) {
+      const firstErrorKey = Object.keys(errors)[0];
+      return "general.form." + firstErrorKey;
+    }
+
+    return null;
+  }
+
   validateMatchingPassword(isOriginal: boolean) {
     return (control: AbstractControl) => {
       if (!control.parent) return null;

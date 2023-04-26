@@ -34,6 +34,7 @@ mat-card-header.mat-full-width > .mat-mdc-card-header-text {
   text-decoration: underline;
   &:hover {
     color: dodgerblue;
+    cursor: pointer;
   }
 }
 
@@ -42,6 +43,7 @@ mat-card-header.mat-full-width > .mat-mdc-card-header-text {
   text-decoration: none;
   &:hover {
     color: dodgerblue;
+    cursor: pointer;
   }
 }
 

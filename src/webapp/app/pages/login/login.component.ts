@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {Login} from "../../models/Login";
 import {Router} from "@angular/router";
@@ -28,5 +28,15 @@ export class LoginComponent {
 
   onError(err: any) {
     console.log(err);
+  }
+
+  getFirstErrorMessage(control: AbstractControl) {
+    const errors = control.errors;
+    if (errors) {
+      const firstErrorKey = Object.keys(errors)[0];
+      return "general.form." + firstErrorKey;
+    }
+
+    return null;
   }
 }

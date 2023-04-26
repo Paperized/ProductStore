@@ -6,8 +6,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MainComponent} from './layout/main/main.component';
 import {LayoutModule} from "./layout/layout.module";
 import {SharedModule} from "./shared/shared.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {customInterceptors} from "./interceptor/interceptors";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   imports: [
@@ -16,7 +22,16 @@ import {customInterceptors} from "./interceptor/interceptors";
     BrowserAnimationsModule,
     LayoutModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      },
+      defaultLanguage: 'it',
+      useDefaultLang: true
+    })
   ],
   providers: [
     customInterceptors

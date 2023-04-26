@@ -13,15 +13,15 @@ public class ConstraintNamesMapper {
   public Map<String, String> getConstraintNamesTranslator() {
     Map<String, String> map = new HashMap<>();
     // User
-    map.put("users.uc_user_username", "USER_USERNAME");
-    map.put("users.uc_user_email", "USER_EMAIL");
+    map.put("users.uc_user_username", "uc_user_username");
+    map.put("users.uc_user_email", "uc_user_email");
 
     // Role
-    map.put("roles.uc_role_name", "ROLE_NAME");
+    map.put("roles.uc_role_name", "uc_role_name");
 
     // User-Role
-    map.put("user_roles.fk_userroles_user_id", "UR_USER_ID");
-    map.put("user_roles.fk_userroles_role_id", "UR_ROLE_ID");
+    map.put("user_roles.fk_userroles_user_id", "fk_user_id");
+    map.put("user_roles.fk_userroles_role_id", "fk_role_id");
 
     // Product
 
