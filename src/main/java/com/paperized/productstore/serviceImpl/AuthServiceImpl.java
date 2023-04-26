@@ -38,14 +38,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public RegisterResponse register(RegisterRequest registerRequest) {
-        if(userRepository.existsByUsername(registerRequest.getUsername()))
-            throw new EntityAlreadyExistsException("Username already exists!");
-
         User user = MapperUtil.mapTo(RegisterRequest::toUser, registerRequest);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
 
-        Role role = roleRepository.findByName(AuthRole.USER).orElseThrow();
+        Role role = roleRepository.findByName(AuthRole.USER).orElseThrow(RuntimeException::new);
         user.getRoles().add(role);
 
         return new RegisterResponse(userRepository.save(user).getId());

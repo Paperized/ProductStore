@@ -18,15 +18,16 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(name = "uc_user_username", columnNames = "username"),
+                                            @UniqueConstraint(name = "uc_user_email", columnNames = "email")})
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue
     private Long id;
-    @Column(nullable = false, length = 16, unique = true)
+    @Column(nullable = false, length = 16)
     private String username;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
     @Column(nullable = false)
     private String password;
@@ -35,8 +36,11 @@ public class User implements UserDetails {
     private Timestamp creationTime;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JoinTable(name = "user_roles",
+               joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+               foreignKey = @ForeignKey(name = "fk_userroles_user_id"),
+               inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+               inverseForeignKey = @ForeignKey(name = "fk_userroles_role_id"))
     private List<Role> roles = new ArrayList<>();
 
     @Override
