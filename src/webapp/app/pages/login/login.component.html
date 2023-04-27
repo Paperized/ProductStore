@@ -23,7 +23,7 @@
         <mat-error *ngIf="this.getFirstErrorMessage(loginForm.controls['password']); let localError"
                    [translate]="localError" [translateParams]="{min: 6}"></mat-error>
       </mat-form-field>
-      <mat-hint *ngIf="errorCodeResult" [translate]="errorCodeResult"></mat-hint>
+      <mat-hint *ngIf="errorCodeResult" errorTranslate [errorCode]="errorCodeResult"></mat-hint>
       <button class="login-button" mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" translate="login.loginBtn"></button>
     </form>
   </mat-card-content>

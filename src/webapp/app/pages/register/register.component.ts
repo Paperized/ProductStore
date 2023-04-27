@@ -34,12 +34,8 @@ export class RegisterComponent {
     this.authService.register(register)
       .subscribe({
         next: _ => this.router.navigate(['/']),
-        error: err => this.onError(err)
+        error: err => this.errorCodeResult = err.error.errors[0].errorCode
       });
-  }
-
-  onError(err: HttpErrorResponse) {
-    this.errorCodeResult = `errors.serverResponse.${err.error.errors[0].errorCode}`;
   }
 
   getFirstErrorMessage(control: AbstractControl) {

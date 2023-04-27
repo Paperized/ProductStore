@@ -33,7 +33,7 @@
           <input matInput type="password" placeholder="Confirm your password" formControlName="confirmPassword">
           <mat-error *ngIf="this.getFirstErrorMessage(registerForm.controls['confirmPassword']); let localError" [translate]="localError"></mat-error>
         </mat-form-field>
-        <mat-hint *ngIf="errorCodeResult" [translate]="errorCodeResult"></mat-hint>
+        <mat-hint *ngIf="errorCodeResult" errorTranslate [errorCode]="errorCodeResult"></mat-hint>
         <button class="login-button" mat-raised-button color="primary" [disabled]="registerForm.invalid" translate="register.registerBtn"></button>
       </form>
     </mat-card-content>
