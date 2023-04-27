@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {Login} from "../../models/Login";
 import {Register} from "../../models/Register";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-register',
@@ -11,6 +12,7 @@ import {Register} from "../../models/Register";
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  errorCodeResult?: string;
 
   registerForm = this.formBuilder.group({
     username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
@@ -32,12 +34,12 @@ export class RegisterComponent {
     this.authService.register(register)
       .subscribe({
         next: _ => this.router.navigate(['/']),
-        error: this.onError
+        error: err => this.onError(err)
       });
   }
 
-  onError(err: any) {
-    console.log(err);
+  onError(err: HttpErrorResponse) {
+    this.errorCodeResult = `errors.serverResponse.${err.error.errors[0].errorCode}`;
   }
 
   getFirstErrorMessage(control: AbstractControl) {

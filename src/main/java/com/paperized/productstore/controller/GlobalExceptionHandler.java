@@ -3,6 +3,7 @@ package com.paperized.productstore.controller;
 import com.paperized.productstore.exception.ApiErrorResponse;
 import com.paperized.productstore.exception.EntityAlreadyExistsException;
 import com.paperized.productstore.exception.EntityNotFoundException;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,7 +34,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<ApiErrorResponse> entityNotFoundExceptionHandling(Exception exception) {
     return new ResponseEntity<>(
       ApiErrorResponse.fromErrors(HttpStatus.NOT_FOUND,
-        "ENTITY_NOT_FOUND",
+        "entityNotFound",
         exception.getMessage()),
       HttpStatus.NOT_FOUND
     );
@@ -43,19 +44,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<ApiErrorResponse> entityAlreadyExistsExceptionHandling(Exception exception) {
     return new ResponseEntity<>(
       ApiErrorResponse.fromErrors(HttpStatus.CONFLICT,
-        "ENTITY_ALREADY_EXISTS",
+        "entityAlreadyExists",
         exception.getMessage()),
       HttpStatus.CONFLICT
     );
   }
 
   @ExceptionHandler(DataIntegrityViolationException.class)
-  public ResponseEntity<ApiErrorResponse> entityNotFoundExceptionHandling(DataIntegrityViolationException exception) {
+  public ResponseEntity<ApiErrorResponse> dataIntegrityViolationExceptionHandling(DataIntegrityViolationException exception) {
     if(!(exception.getCause() instanceof ConstraintViolationException violationException)) {
-      return internalErrorException();
+      return internalErrorException(exception);
     }
 
-    String errorCode = constrainsErrorCodeMap.getOrDefault(violationException.getConstraintName(), "UNHANDLED");
+    String errorCode = constrainsErrorCodeMap.getOrDefault(violationException.getConstraintName(), "uc_unhandled");
     return new ResponseEntity<>(
       ApiErrorResponse.fromErrors(HttpStatus.CONFLICT,
         errorCode,
@@ -68,37 +69,28 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<ApiErrorResponse> authenticationExceptionHandling(Exception exception) {
     HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
     String errorCode, errorMessage;
-
     if (exception instanceof BadCredentialsException) {
       httpStatus = HttpStatus.BAD_REQUEST;
-      errorCode = "BAD_CREDENTIALS";
+      errorCode = "badCredentials";
       errorMessage = "Invalid username or password";
     } else if (exception instanceof LockedException) {
-      errorCode = "LOCKED_ACCOUNT";
+      errorCode = "lockedAccount";
       errorMessage = "User account is locked";
     } else if (exception instanceof DisabledException) {
-      errorCode = "DISABLED_ACCOUNT";
+      errorCode = "disabledAccount";
       errorMessage = "User account is disabled";
-    } else if (exception instanceof CredentialsExpiredException) {
-      errorCode = "CREDENTIALS_EXPIRED";
-      errorMessage = "User credentials have expired";
-    } else if (exception instanceof JwtException) {
-      errorCode = "INVALID_TOKEN";
-      errorMessage = "Invalid or expired token";
     } else {
-      httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-      errorCode = "INTERNAL";
-      errorMessage = "An unexpected error occurred";
+      return internalErrorException(exception);
     }
 
     return new ResponseEntity<>(ApiErrorResponse.fromErrors(httpStatus, errorCode, errorMessage), httpStatus);
   }
 
   @ExceptionHandler(Exception.class)
-  public ResponseEntity<ApiErrorResponse> internalErrorException() {
+  public ResponseEntity<ApiErrorResponse> internalErrorException(Exception exception) {
     return new ResponseEntity<>(
       ApiErrorResponse.fromErrors(HttpStatus.INTERNAL_SERVER_ERROR,
-        "INTERNAL_ERROR",
+        "internalError",
         "An unexpected error occurred"),
       HttpStatus.INTERNAL_SERVER_ERROR
     );

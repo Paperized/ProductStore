@@ -31,7 +31,7 @@ export class AccountService {
   }
 
   isAuthenticated(): boolean {
-    return this._currentAccount !== null;
+    return this._currentAccount !== null || localStorage.getItem('authenticationToken') !== null;
   }
 
   private fetchCurrentAccount(): Observable<Account> {
