@@ -9,6 +9,8 @@ import {FooterComponent} from "./footer/footer.component";
 import {RouterModule} from "@angular/router";
 import {SharedModule} from "../shared/shared.module";
 import { ErrorComponent } from './error/error.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { ErrorComponent } from './error/error.component';
     RouterModule,
     MatIconModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSidenavModule,
+    MatListModule
   ]
 })
 export class LayoutModule { }
