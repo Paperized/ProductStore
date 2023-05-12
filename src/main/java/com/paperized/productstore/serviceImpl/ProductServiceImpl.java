@@ -28,13 +28,13 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO getProductById(Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(EntityNotFoundException::new);
-        return MapperUtil.mapTo(ProductDTO::fromProduct, product);
+        return MapperUtil.mapTo(product, ProductDTO::fromProduct);
     }
 
     @Override
     public List<ProductDTO> getAllProducts() {
         return productRepository.findAll().stream()
-                .map(x -> MapperUtil.mapTo(ProductDTO::fromProduct, x)).toList();
+                .map(x -> MapperUtil.mapTo(x, ProductDTO::fromProduct)).toList();
     }
 
     @Transactional

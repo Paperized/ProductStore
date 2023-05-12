@@ -3,6 +3,7 @@ package com.paperized.productstore.security;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paperized.productstore.exception.ApiErrorResponse;
+import com.paperized.productstore.security.util.SecurityUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -53,19 +54,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     if(claims == null)
       return;
 
-    String username = claims.getSubject();
-    if (username != null) {
-      List<GrantedAuthority> roles = Arrays.stream(claims.get("roles").toString()
-        .split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-      User userDetails = new User(username, "", roles);
-      UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-        userDetails,
-        null,
-        roles
-      );
-
-      authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-      SecurityContextHolder.getContext().setAuthentication(authToken);
+    String email = claims.getSubject();
+    String idAsString = claims.getId();
+    if (email != null && idAsString != null) {
+      String[] roles = claims.get("roles").toString().split(",");
+      Long id = Long.parseLong(idAsString);
+      SecurityUtils.setCurrentAuthentication(id, email, roles, request);
     }
 
     filterChain.doFilter(request, response);

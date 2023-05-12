@@ -1,7 +1,10 @@
 package com.paperized.productstore.security;
 
+import com.paperized.productstore.security.util.AuthenticatedUser;
+import com.paperized.productstore.security.util.SecurityUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -21,60 +24,66 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @EnableWebSecurity
 public class SecurityConfig {
-    private static final String[] AUTH_WHITELIST = {
-            // -- Swagger UI v2
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-            // -- Swagger UI v3 (OpenAPI)
-            "/api/v3/api-docs/**",
-            "/swagger-ui/**",
-            // other public endpoints of your API may be appended to this array
-            // all api by default public, use method security to secure endpoints
-            "/api/v1/**"
-    };
+  private static final String[] AUTH_WHITELIST = {
+    // -- Swagger UI v2
+    "/v2/api-docs",
+    "/swagger-resources",
+    "/swagger-resources/**",
+    "/configuration/ui",
+    "/configuration/security",
+    "/swagger-ui.html",
+    "/webjars/**",
+    // -- Swagger UI v3 (OpenAPI)
+    "/api/v3/api-docs/**",
+    "/swagger-ui/**",
+    // other public endpoints of your API may be appended to this array
+    // all api by default public, use method security to secure endpoints
+    "/api/v1/**"
+  };
 
-    private final CustomUserDetailsService customUserDetailsService;
-    private final JwtAuthenticationFilter jwtAuthFilter;
+  private final CustomUserDetailsService customUserDetailsService;
+  private final JwtAuthenticationFilter jwtAuthFilter;
 
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtAuthenticationFilter jwtAuthFilter) {
-        this.customUserDetailsService = customUserDetailsService;
-        this.jwtAuthFilter = jwtAuthFilter;
-    }
+  public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtAuthenticationFilter jwtAuthFilter) {
+    this.customUserDetailsService = customUserDetailsService;
+    this.jwtAuthFilter = jwtAuthFilter;
+  }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .anyRequest().authenticated().and()
-                .authenticationProvider(authenticationProvider())
-                .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)).and()
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http.csrf().disable()
+      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+      .authorizeHttpRequests()
+      .antMatchers(AUTH_WHITELIST).permitAll()
+      .anyRequest().authenticated().and()
+      .authenticationProvider(authenticationProvider())
+      .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)).and()
+      .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+    return http.build();
+  }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    return authenticationConfiguration.getAuthenticationManager();
+  }
 
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(customUserDetailsService);
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
-    }
+  @Bean
+  public AuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+    authenticationProvider.setUserDetailsService(customUserDetailsService);
+    authenticationProvider.setPasswordEncoder(passwordEncoder());
+    return authenticationProvider;
+  }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  @Scope("session")
+  public AuthenticatedUser authenticatedUser() {
+    return SecurityUtils.getCurrentUser();
+  }
 }

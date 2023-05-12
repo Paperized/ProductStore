@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
@@ -62,6 +63,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorCode,
         "Field already in use"),
       HttpStatus.CONFLICT
+    );
+  }
+
+  @ExceptionHandler(AccessDeniedException.class)
+  public ResponseEntity<ApiErrorResponse> accessDeniedExceptionHandling(Exception exception) {
+    return new ResponseEntity<>(
+      ApiErrorResponse.fromErrors(HttpStatus.UNAUTHORIZED,
+        "accessDenied",
+        "Please log in"),
+      HttpStatus.UNAUTHORIZED
     );
   }
 

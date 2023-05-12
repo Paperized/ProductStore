@@ -1,4 +1,4 @@
-package com.paperized.productstore.dto;
+package com.paperized.productstore.dto.auth;
 
 import com.paperized.productstore.entity.User;
 import lombok.Data;
@@ -7,16 +7,16 @@ import java.sql.Timestamp;
 import java.time.Instant;
 
 @Data
-public class RegisterRequest {
+public class RegisterRequestDTO {
     private String username;
     private String email;
     private String password;
 
-    public static User toUser(RegisterRequest registerRequest) {
+    public static User toUser(RegisterRequestDTO registerRequestDTO) {
         User user = new User();
-        user.setUsername(registerRequest.getUsername());
-        user.setEmail(registerRequest.getEmail());
-        user.setPassword(registerRequest.getPassword());
+        user.setUsername(registerRequestDTO.getUsername());
+        user.setEmail(registerRequestDTO.getEmail());
+        user.setPassword(registerRequestDTO.getPassword());
         user.setCreationTime(Timestamp.from(Instant.now()));
         return user;
     }

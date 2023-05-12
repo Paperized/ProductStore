@@ -1,10 +1,10 @@
-package com.paperized.productstore.dto;
+package com.paperized.productstore.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class RegisterResponse {
+public class RegisterResponseDTO {
   private Long id;
 }
