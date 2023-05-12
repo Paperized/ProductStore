@@ -42,7 +42,7 @@ export class RegisterComponent {
     const errors = control.errors;
     if (errors) {
       const firstErrorKey = Object.keys(errors)[0];
-      return "general.form." + firstErrorKey;
+      return "errors.form." + firstErrorKey;
     }
 
     return null;

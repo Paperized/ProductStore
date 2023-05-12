@@ -2,11 +2,11 @@ import {Component, Input, TemplateRef, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
 })
-export class HeaderComponent{
+export class NavbarComponent {
   StoreName: string = "AmazingShop";
   @Input() sidenav?: MatSidenav;
 

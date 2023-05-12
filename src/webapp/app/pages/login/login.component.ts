@@ -15,7 +15,7 @@ export class LoginComponent {
   errorCodeResult?: string;
 
   loginForm = this.formBuilder.group({
-    username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
@@ -24,7 +24,7 @@ export class LoginComponent {
 
   onSubmit() {
     this.errorCodeResult = undefined;
-    this.authService.login(new Login(this.loginForm.value.username!, this.loginForm.value.password!))
+    this.authService.login(new Login(this.loginForm.value.email!, this.loginForm.value.password!))
       .subscribe({
         next: _ => this.router.navigate(['/']),
         error: err => this.errorCodeResult = err.error.errors[0].errorCode
@@ -35,7 +35,7 @@ export class LoginComponent {
     const errors = control.errors;
     if (errors) {
       const firstErrorKey = Object.keys(errors)[0];
-      return "general.form." + firstErrorKey;
+      return "errors.form." + firstErrorKey;
     }
 
     return null;

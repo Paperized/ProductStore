@@ -8,6 +8,8 @@ import {Observable, Subscription} from "rxjs";
 export class ErrorTranslatorDirective implements OnChanges, OnDestroy {
   private observableStream?: Subscription;
   @Input() errorCode?: string;
+  @Input() errorType?: string;
+  @Input() errorParams?: Object;
 
   constructor(private elementRef: ElementRef,
               private translateService: TranslateService) {
@@ -19,11 +21,16 @@ export class ErrorTranslatorDirective implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.errorCode === undefined) return;
-    const key = `errors.serverResponse.${this.errorCode}`;
+    const key = `errors.${this.getErrorTypeString()}${this.errorCode}`;
 
     this.observableStream?.unsubscribe();
-    this.observableStream = this.translateService.stream(key).subscribe({
+    this.observableStream = this.translateService.stream(key, this.errorParams).subscribe({
       next: v => this.elementRef.nativeElement.innerText = v
     });
+  }
+
+  private getErrorTypeString() {
+    if(this.errorType === undefined) return '';
+    return this.errorType + '.';
   }
 }

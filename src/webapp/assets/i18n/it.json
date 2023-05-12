@@ -3,15 +3,7 @@
     "username": "Username",
     "email": "Email",
     "password": "Password",
-    "confirmPassword": "Conferma Password",
-    "form": {
-      "required": "Questo campo è obbligatorio",
-      "fieldLengthBetween": "Questo campo deve contenere dai {{ min }} ai {{ max }} caratteri",
-      "minlength": "Questo campo deve essere di almeno {{ min }} caratteri",
-      "maxlength": "Questo campo non può contenere più di {{ max }} caratteri",
-      "email": "Email non valida",
-      "passwordMismatch": "La password confermata è diversa dalla precedente"
-    }
+    "confirmPassword": "Conferma Password"
   },
   "errors": {
     "serverResponse": {
@@ -31,6 +23,13 @@
       "lockedAccount": "Il tuo account è bloccato",
       "disabledAccount": "Il tuo account è disabilitato",
       "tokenExpired": "La tua sessione è scaduta, accedi e riprova"
+    },
+    "form": {
+      "required": "Questo campo è obbligatorio",
+      "minlength": "Questo campo deve essere di almeno {{ min }} caratteri",
+      "maxlength": "Questo campo non può contenere più di {{ max }} caratteri",
+      "email": "Email non valida",
+      "passwordMismatch": "La password confermata è diversa dalla precedente"
     }
   },
   "login": {
@@ -44,3 +43,4 @@
     "registerBtn": "Iscriviti"
   }
 }
+

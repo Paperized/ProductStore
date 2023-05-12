@@ -4,7 +4,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MainComponent} from "./main/main.component";
-import {HeaderComponent} from "./header/header.component";
+import {NavbarComponent} from "./navbar/navbar.component";
 import {FooterComponent} from "./footer/footer.component";
 import {RouterModule} from "@angular/router";
 import {SharedModule} from "../shared/shared.module";
@@ -16,7 +16,7 @@ import {MatListModule} from "@angular/material/list";
 @NgModule({
   declarations: [
     MainComponent,
-    HeaderComponent,
+    NavbarComponent,
     FooterComponent,
     ErrorComponent
   ],

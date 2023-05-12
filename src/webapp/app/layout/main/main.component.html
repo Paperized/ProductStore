@@ -1,10 +1,10 @@
 <div class="flex flex-col min-h-screen">
-  <app-header [sidenav]="sidenav" class="flex-none" #header></app-header>
+  <app-navbar [sidenav]="sidenav" class="flex-none" #navbar></app-navbar>
   <main id="main-page" class="flex flex-auto">
     <mat-sidenav-container>
       <mat-sidenav #sidenav>
         <ng-template #empty></ng-template>
-        <ng-container *ngTemplateOutlet="header.sidenavTemplate || empty"/>
+        <ng-container *ngTemplateOutlet="navbar.sidenavTemplate || empty"/>
       </mat-sidenav>
       <mat-sidenav-content>
         <router-outlet></router-outlet>
